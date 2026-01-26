@@ -2,7 +2,7 @@
 This repo is an example of how to build a Kit App which communicates with the Emulate3D World Stage server.
 
 It is based on the 107.3 branch in [NVIDIA Kit App Template](https://github.com/NVIDIA-Omniverse/kit-app-template).
-See [Kit-App-Template_README.md](Kit-App-Template_README.md) for the original README.
+See [Kit-App-Template_README.md](Kit-App-Template_README.md) for the NVIDIA README and [LICENSE](LICENSE) for NVIDIA licensing terms.
 
 This examples contains a pre-made app and extension.
 The extension contains the code to connect to the world stage server, found in [Emulate3dPybindExtension.cpp](/source/extensions/rok.emulate3d.python/plugins/rok.emulate3d.python/Emulate3dPybindExtension.cpp).
