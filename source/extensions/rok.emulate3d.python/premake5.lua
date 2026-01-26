@@ -21,8 +21,7 @@ project_ext_plugin(ext, "rok.emulate3d.python.plugin")
 
     add_usd(extra_usd_libs)
 
-    -- local emulate3d_dir = <emulate3d_2026_installation_path>
-    local emulate3d_dir = "../../../../emulate3d.usd"
+    local emulate3d_dir = <emulate3d_2026_installation_path>
     print("Emulate3D USD directory (absolute): " .. path.getabsolute(emulate3d_dir))
 
     local grpc_dependencies_dir = emulate3d_dir .. "/dependencies/grpc/release"
