@@ -12,6 +12,7 @@
     <filter include="python" />
     <filter include="carb_sdk_plugins" />
     <filter include="premake" />
+    <filter include="usd-release"/>
   </import>
 
   <!-- Pull those deps of the same version as in Kit SDK. Override linkPath to point correctly, other properties can also be override, including version. -->
@@ -19,6 +20,7 @@
   <dependency name="pybind11" linkPath="../../_build/target-deps/pybind11" />
   <dependency name="fmt" linkPath="../../_build/target-deps/fmt" />
   <dependency name="python" linkPath="../../_build/target-deps/python" />
+  <dependency name="usd-release" linkPath="../../_build/target-deps/usd/release"/>
 
   <!-- The doctest package imported from kit-kernel is not yet available. -->
   <dependency name="doctest" linkPath="../../_build/target-deps/doctest">

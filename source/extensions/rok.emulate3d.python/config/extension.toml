@@ -1,0 +1,47 @@
+[package]
+version = "1.0.1" # Semantic Versioning is used: https://semver.org/
+
+# These fields are used primarily for display in the extension browser UI.
+title = "Emulate3D Omniverse"
+description = "An app which can connect to the Emulate3D world stage server."
+category = "Emulate3D"
+keywords = ["Emulate3D"]
+icon = "data/icon.png"
+preview_image = "data/preview.png"
+changelog = "docs/CHANGELOG.md"
+readme  = "docs/README.md"
+authors = ["Emulate3D"]
+repository = "https://https://github.com/RockwellAutomation/ra-emulate3d-kit-app-template"
+
+# Disable hot-reloading due to generated python bindings.
+[core]
+reloadable = false
+
+# Define the Python modules that this extension provides.
+[[python.module]]
+name = "rok.emulate3d.python"
+
+# Define the C++ plugins that this extension provides.
+[[native.plugin]]
+path = "bin/*.plugin"
+
+[dependencies]
+"omni.ui" = {}
+
+# Define any test specific properties of this extension.
+#[[test]]
+#cppTests.libraries = [
+#    "bin/${lib_prefix}rok.emulate3d.python.tests${lib_ext}"
+#]
+
+# Define the documentation that will be generated for this extension.
+[documentation]
+pages = [
+    "docs/Overview.md",
+    "docs/CHANGELOG.md",
+]
+cpp_api = [
+     "include/rok/emulate3d/python/IRokEmulate3dPythonInterface.h",
+     "include/rok/emulate3d/python/IRokEmulate3dPythonObjectInterface.h",
+     "include/rok/emulate3d/python/RokEmulate3dPythonObject.h",
+]
