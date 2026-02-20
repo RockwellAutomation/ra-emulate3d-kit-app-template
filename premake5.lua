@@ -17,3 +17,5 @@ repo_build.prebuild_copy {
 -- Apps: for each app generate batch files and a project based on kit files (e.g. my_name.my_app.kit)
 
 define_app("rockwellautomation.emulate3d.omniverse.kit")
+define_app("ra.emulate3d.web.kit")
+define_app("ra.emulate3d.web_streaming.kit")
