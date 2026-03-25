@@ -9,7 +9,7 @@ The extension contains the code to connect to the world stage server, found in [
 
 ## Prerequisites
 - Prerequisites in the NVIDIA [README](Kit-App-Template_README.md)
-- Visual Studio 2019
+- Visual Studio 2022
 - Emulate3D 2026
 
 ## Building and launching
