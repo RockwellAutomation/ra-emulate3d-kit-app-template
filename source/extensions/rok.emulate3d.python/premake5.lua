@@ -24,7 +24,7 @@ project_ext_plugin(ext, "rok.emulate3d.python.plugin")
     local emulate3d_dir = <emulate3d_2026_installation_path>
     print("Emulate3D USD directory (absolute): " .. path.getabsolute(emulate3d_dir))
 
-    local grpc_dependencies_dir = emulate3d_dir .. "/dependencies/grpc/release"
+    local grpc_dependencies_dir = emulate3d_dir .. "/.dependencies/grpc/release"
     local e3d_usd_grpc_dir = emulate3d_dir .. "/Emulate3D.Usd.Grpc"
     local e3d_usd_sdk_dir = emulate3d_dir .. "/Emulate3D.Usd.Sdk"
     local e3d_usd_grpc_build_dir = emulate3d_dir .. "/bin/x64/Release/Emulate3D.Usd.Grpc"
@@ -44,10 +44,12 @@ project_ext_plugin(ext, "rok.emulate3d.python.plugin")
     end
 
     local e3d_usd_sdk_dll = e3d_usd_sdk_build_dir .. "/emulate3D_usdSdk.dll"
+    local e3d_usd_grpc_dll = e3d_usd_grpc_build_dir .. "/emulate3D_usdGrpc.dll"
     local zlib_dll = grpc_dependencies_dir .. "/bin/zlib.dll"
 
     local files_to_check = {
         e3d_usd_sdk_dll,
+        e3d_usd_grpc_dll,
         zlib_dll
     }
     for _, file in ipairs(files_to_check) do

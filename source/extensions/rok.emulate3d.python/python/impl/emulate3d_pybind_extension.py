@@ -9,6 +9,7 @@
 import omni.ext
 import omni.usd
 import threading
+import carb.settings
 from .._rok_emulate3d_python_lib import *
 from .connection_ui import ConnectionUI
 
@@ -31,13 +32,29 @@ class Emulate3DPybindExtension(omni.ext.IExt):
         self._connection_ui = None
         self.act_as_client = True
 
+        settings = carb.settings.get_settings()
+        self.url = settings.get("/ext/rok.emulate3d.python/url")
+        self.clientName = settings.get("/ext/rok.emulate3d.python/clientName")
+
     def on_startup(self, _ext_id):
         self.find_create_default_stage()
         print("[rok.emulate3d.python] Plugin started")
         if self.act_as_client:
             # Create and initialize connection UI
             self._connection_ui = ConnectionUI(get_bound_interface(), self.find_create_default_stage)
-            self._connection_ui.create_ui()
+            if (self.url and self.clientName):
+                self._connection_ui.create_ui(False)
+                print(f"[rok.emulate3d.python] Connecting to gRPC server at {self.url}...")
+                context = omni.usd.get_context()
+                stage_id = context.get_stage_id()
+                print(f"[rok.emulate3d.grpc_server] Connecting to {self.url}...")
+                if get_bound_interface().connect_client(self.clientName, stage_id, self.url):
+                    print(f"[rok.emulate3d.grpc_server] Connected to {self.url} successfully.")
+                else:
+                    print(f"[rok.emulate3d.grpc_server] Failed to connect to {self.url}. Check if the server is running and the URL is correct.")
+            else:
+                self._connection_ui.create_ui(True)
+
         else:
             context = omni.usd.get_context()
             interface = get_bound_interface()

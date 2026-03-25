@@ -81,7 +81,7 @@ publish_pip_cache = false
 
 [repo_precache_exts]
 # Apps to run and precache
-apps = ["${root}/source/apps/rockwellautomation.emulate3d.omniverse.kit"]
+apps = ["${root}/source/apps/rockwellautomation.emulate3d.omniverse.kit", "${root}/source/apps/ra.emulate3d.web.kit", "${root}/source/apps/ra.emulate3d.web_streaming.kit"]
 
 registries = [
     { name = "kit/default", url = "https://ovextensionsprod.blob.core.windows.net/exts/kit/prod/${kit_version_major}/shared" },
