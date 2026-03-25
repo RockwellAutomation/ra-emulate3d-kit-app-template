@@ -1,5 +1,5 @@
 [package]
-version = "1.0.1" # Semantic Versioning is used: https://semver.org/
+version = "0.1.6" # Semantic Versioning is used: https://semver.org/
 
 # These fields are used primarily for display in the extension browser UI.
 title = "Emulate3D Omniverse"
@@ -27,6 +27,7 @@ path = "bin/*.plugin"
 
 [dependencies]
 "omni.ui" = {}
+"omni.usd" = {}
 
 # Define any test specific properties of this extension.
 #[[test]]

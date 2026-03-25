@@ -23,21 +23,19 @@ class ConnectionUI:
         self._name_field = None
         self._status_label = None
 
-    def create_ui(self):
-        """Create the toolbar button and connection settings window."""
-        # Add toolbar button
+    def create_ui(self, open_on_startup=False):
+        """Create the menu item and connection settings window."""
+        # Add menu item
         editor_menu = omni.kit.ui.get_editor_menu()
         if editor_menu:
             self._toolbar_button = editor_menu.add_item(
                 "Window/Emulate3D Connection Settings",
-                self._toggle_window,
-                toggle=True,
-                value=True
+                self._show_window,
             )
 
         # Create UI window
         self._window = ui.Window("Emulate3D Connection Settings", width=600, height=400)
-        self._window.set_visibility_changed_fn(self._on_window_visibility_changed)
+        self._window.visible = open_on_startup
         with self._window.frame:
             with ui.VStack(spacing=10):
                 ui.Label("Enter Server URL:")
@@ -63,17 +61,10 @@ class ConnectionUI:
             self._window.destroy()
             self._window = None
 
-    def _toggle_window(self, *args):
-        """Toggle window visibility."""
+    def _show_window(self, *args):
+        """Show the connection settings window."""
         if self._window:
-            self._window.visible = not self._window.visible
-
-    def _on_window_visibility_changed(self, visible):
-        """Update toolbar button state when window visibility changes."""
-        if self._toolbar_button:
-            editor_menu = omni.kit.ui.get_editor_menu()
-            if editor_menu:
-                editor_menu.set_value(self._toolbar_button, visible)
+            self._window.visible = True
 
     def _on_connect_clicked(self):
         """Handle connect button click."""
@@ -89,6 +80,7 @@ class ConnectionUI:
         print(f"[rok.emulate3d.grpc_server] Connecting to {url}...")
         if self._bound_interface.connect_client(name, stage_id, url):
             self._status_label.text = f"Connected to {url}"
+            self._window.visible = False
 
     def _on_disconnect_clicked(self):
         """Handle disconnect button click."""

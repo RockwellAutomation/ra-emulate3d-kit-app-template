@@ -67,7 +67,7 @@ public:
 
     bool connect_client(std::string connectionName, long id, std::string url)
     {
-        ::emulate3d::Logger::SetLevel(::emulate3d::LogLevel::Debug);
+        ::emulate3d::Logger::SetLevel(::emulate3d::LogLevel::Info);
         PXR_NS::UsdStageRefPtr stage = PXR_NS::UsdUtilsStageCache::Get().Find(PXR_NS::UsdStageCache::Id::FromLongInt(id));
         if (!stage) {
             ::emulate3d::Logger::Error("Stage not found for id %ld", id);
