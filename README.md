@@ -9,11 +9,13 @@ The extension contains the code to connect to the world stage server, found in [
 
 ## Prerequisites
 - Prerequisites in the NVIDIA [README](Kit-App-Template_README.md)
-- Visual Studio 2019
-- Emulate3D 2026
+- Visual Studio 2022
+- Emulate3D 2026 (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
+- Emulate3D.Usd.Sdk (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
 
 ## Building and launching
-- In [premake5.lua](source/extensions/rok.emulate3d.python/premake5.lua) replace <emulate3d_2026_installation_path> with your Emulate3D install path, eg "C:\Program Files (x86)\Emulate3D 2026".
+- Extract Emulate3D.Usd.Sdk to a known location, eg `C:\Emulate3D.Usd.Sdk`
+- In [premake5.lua](source/extensions/rok.emulate3d.python/premake5.lua) replace <Emulate3D.Usd.Sdk directory> with the Emulate3D.Usd.Sdk install path, eg "C:\Emulate3D.Usd.Sdk".
 - Run repo.bat with the build argument eg `.\repo.bat build`
 - Launch the built app with `.\repo.bat launch`
 - Select `ra.emulate3d.web.kit` to launch Omniverse with WebRTC capaibilities, or `rockwellautomation.emulate3d.omniverse.kit`to launch without
