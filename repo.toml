@@ -39,7 +39,7 @@ enabled = true
 link_host_toolchain = true
 
 # Filter on Visual Studio version e.g.: Visual Studio 2022. Empty string will match all years and prioritize the newest.
-vs_version = "vs2019"
+vs_version = "vs2022"
 
 # Visual Studio path; This will be used if the user would like to point to a specific VS installation rather than rely on heuristic locating.
 # vs_path = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\"
@@ -48,7 +48,7 @@ vs_version = "vs2019"
 # vs_edition = "Community"
 
 # Filter by Visual Studio installations that have installed this version of the MSVC compiler.
-# msvc_version = "v142"
+msvc_version = "v142"
 
 # Filter by Visual Studio installations that ship with MSBuild of this major version.
 # msbuild_version = "17"

@@ -10,7 +10,7 @@
 
 [package]
 title = "Emulate3D.Omniverse"
-version = "0.1.4"
+version = "0.1.6"
 description = """A foundation for a base editor application."""
 keywords = ["app"]  # That makes it browsable in UI with "app" filter
 template_name = "kit_base_editor"
@@ -63,7 +63,8 @@ template_name = "kit_base_editor"
 "omni.usd.metrics.assembler.ui" = {}
 "omni.usd.schema.metrics.assembler" = {}
 "omni.warp.core" = {} # Warp support
-"rok.emulate3d.python" = {} # Python extension for testing
+"rok.emulate3d.python" = {} # Python support for Emulate3D-specific extensions and features.
+# "omni.kit.xr.bundle.apple_vision_pro" = {} Uncomment for Apple Vision Pro support.
 
 
 [settings]
@@ -76,7 +77,7 @@ renderer.gpuEnumeration.glInterop.enabled = false # Improves startup speed.
 renderer.asyncInit = true # Don't block while renderer inits
 rtx.ecoMode.enabled = true
 rtx.hydra.mdlMaterialWarmup = true # start loading the MDL shaders needed before any delegate is actually created.
-
+xr.openxr.preferNVOpaqueDataChannel = true
 
 [settings.app]
 content.emptyStageOnStart = true
@@ -86,6 +87,11 @@ hangDetector.enabled = true
 hangDetector.timeout = 120
 renderer.skipWhileMinimized = true
 window.title = "Emulate3D.Omniverse"
+
+
+
+[settings.app.runMenus]
+items = ["Window", "XR"]
 
 
 [settings.app.environment]
