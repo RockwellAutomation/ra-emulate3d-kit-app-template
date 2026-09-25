@@ -19,14 +19,6 @@ To get started with the USD Viewer template, ensure your development environment
 
 > **NOTE:** Example commands should be executed in **powershell** in Windows and **terminal** in Linux.
 
-:warning: **Important:** Before proceeding with the cloning step, ensure that Git Large File Storage (Git LFS) is installed on your system. To verify this, run the following command in your terminal:
-
-```bash
-git lfs --version
-```
-
-If the command returns a version number, Git LFS is installed correctly. If not, you will need to install Git LFS. You can download and install it from the official website [here](https://git-lfs.github.com/).
-
 #### Cloning the Repository
 
 ```bash
@@ -197,6 +189,8 @@ This will bundle your application into a distributable format, ready for deploym
 
 #### Launching a Package
 
+> :warning: **Deprecated:** `launch --package` is deprecated and will be removed in a future release. To run a packaged application, decompress the archive and launch the extracted application directly. See [Packaging An Application](../../../docs/packaging_app.md) for details.
+
 Applications packaged using the `package` command can be launched using the `launch` command:
 
 **Linux:**
@@ -227,7 +221,7 @@ You will be prompted to select a `.kit` file to serve as the application to laun
 
 For example, if you are containerizing an application for streaming, select the `{your-app-name}_streaming.kit` file to ensure the correct application configuration is launched within the container.
 
-> **NOTE:** If creating a container for Omniverse Cloud Managed PaaS (OVC), select the `{your-app-name}_ovc.kit` file to ensure the proper settings are used for that platform.
+> **NOTE:** If creating a container for a NVIDIA Cloud Functions (NVCF) based deployment, select the `{your-app-name}_nvcf.kit` file to ensure the proper settings are used for that platform.
 
 Similar to desktop packaging, the container option allows for specifying a package name using the `--name` flag to name the container image:
 

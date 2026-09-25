@@ -1,5 +1,5 @@
 [package]
-version = "0.1.6" # Semantic Versioning is used: https://semver.org/
+version = "0.1.9" # Semantic Versioning is used: https://semver.org/
 
 # These fields are used primarily for display in the extension browser UI.
 title = "Emulate3D Omniverse"

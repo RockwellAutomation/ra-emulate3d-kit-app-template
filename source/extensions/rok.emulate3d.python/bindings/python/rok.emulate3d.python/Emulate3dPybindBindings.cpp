@@ -46,14 +46,18 @@ PYBIND11_MODULE(_rok_emulate3d_python_lib, m)
                     connectionName: The name of the connection.
                     id: The id of the stage.
                     url: The url of the server.
+                    trustSelfSigned: True if we should skip certificate verification for https urls.
              Return:
                     True if connection was successful, False otherwise.
              )",
-             py::arg("connectionName"), py::arg("id"), py::arg("url"))
+             py::arg("connectionName"), py::arg("id"), py::arg("url"), py::arg("trustSelfSigned") = false)
         .def("disconnect_client", &IRokEmulate3dPythonInterface::disconnect_client,
             R"(
-             Disconnect from a server.
-             )")
+             Disconnect from a server by URL.
+             Args:
+                    url: The url of the server to disconnect from.
+             )",
+             py::arg("url"))
         .def("process_frames", &IRokEmulate3dPythonInterface::process_frames,
              R"(
              Process frames.

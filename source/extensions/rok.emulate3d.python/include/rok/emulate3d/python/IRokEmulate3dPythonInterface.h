@@ -25,8 +25,8 @@ public:
     /// @private
     CARB_PLUGIN_INTERFACE("rok::emulate3d::python::IRokEmulate3dPythonInterface", 1, 0);
     virtual bool start_server(long id) = 0;
-    virtual bool connect_client(std::string connectionName, long id, std::string url) = 0;
-    virtual void disconnect_client() = 0;
+    virtual bool connect_client(std::string connectionName, long id, std::string url, bool trustSelfSigned) = 0;
+    virtual void disconnect_client(std::string url) = 0;
     virtual bool process_frames() = 0;
     /**
      * Register a bound object.

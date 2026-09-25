@@ -20,7 +20,7 @@
   <dependency name="pybind11" linkPath="../../_build/target-deps/pybind11" />
   <dependency name="fmt" linkPath="../../_build/target-deps/fmt" />
   <dependency name="python" linkPath="../../_build/target-deps/python" />
-  <dependency name="usd-release" linkPath="../../_build/target-deps/usd/release"/>
+  <dependency name="usd-release" linkPath="../../_build/target-deps/usd/release" />
 
   <!-- The doctest package imported from kit-kernel is not yet available. -->
   <dependency name="doctest" linkPath="../../_build/target-deps/doctest">
