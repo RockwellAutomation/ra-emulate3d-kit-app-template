@@ -11,7 +11,7 @@ The extension contains the code to connect to the world stage server, found in [
 - Prerequisites in the NVIDIA [README](Kit-App-Template_README.md)
 - Visual Studio 2022
 - Emulate3D 2026 (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
-- Emulate3D.Usd.Sdk (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
+- Emulate3D.Usd.Sdk 0.0.10 (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
 
 ## Building and launching
 - Extract Emulate3D.Usd.Sdk to a known location, eg `C:\Emulate3D.Usd.Sdk`
