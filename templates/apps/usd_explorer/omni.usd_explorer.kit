@@ -19,8 +19,9 @@ template_name = "omni.usd_explorer"
 "omni.activity.ui" = {}
 "omni.activity.usd_resolver" = {}
 "omni.hydra.engine.stats" = {}
-"omni.hydra.pxr" = {}
 "omni.hydra.pxr.settings" = {}
+"omni.hydra.pxr" = {}
+"omni.hydra.usdrt_delegate" = {}  # Necessary since FabricSceneDelegate is True
 "omni.kit.asset_converter" = {} # File format conversion
 "omni.kit.browser.asset" = {}  # Enable the NVIDIA asset Browsing only
 "omni.kit.browser.sample" = {}  # Examples
@@ -30,7 +31,6 @@ template_name = "omni.usd_explorer"
 "omni.kit.collaboration.telemetry" = {}
 "omni.kit.collaboration.viewport.camera" = {}
 "omni.kit.context_menu" = {}
-"omni.kit.converter.cad" = {order = 1000} # allow other deps like asset_importer to load first
 "omni.kit.developer.bundle" = {}
 "omni.kit.manipulator.camera" = {} # Manipulator for the Viewport
 "omni.kit.manipulator.prim" = {}
@@ -39,6 +39,7 @@ template_name = "omni.usd_explorer"
 "omni.kit.menu.common" = { order = 1000 }
 "omni.kit.menu.edit" = {}
 "omni.kit.menu.file" = {}
+"omni.kit.primitive.mesh" = {} # Primitive mesh
 "omni.kit.property.bundle" = {}
 "omni.kit.property.layer" = {}
 "omni.kit.quicklayout" = {} # Quicklayout is on enabling custom layouts
@@ -71,6 +72,7 @@ template_name = "omni.usd_explorer"
 "omni.kit.viewport.scene_camera_model" = {}  # Push camera changes to Viewport ui.scene as fast as possible
 "omni.kit.viewport.window" = {}
 "omni.kit.waypoint.playlist" = {}
+"omni.kit.widget.cache_indicator" = {}
 "omni.kit.widget.filebrowser" = {} # General purpose widgets to browsder and select fles
 "omni.kit.widget.layers" = {}
 "omni.kit.widget.live" = {}  # Includes Cache status display
@@ -98,17 +100,15 @@ template_name = "omni.usd_explorer"
 "omni.timeline.live_session" = {}
 "omni.usd.metrics.assembler.ui" = {}
 "omni.usd.schema.metrics.assembler" = {}
+"omni.kit.converter.cad" = {order = 1000} # allow other deps like asset_importer to load first
+"omni.kit.window.modifier.titlebar" = {}
 "omni.warp.core" = {}
 "usdrt.scenegraph" = {}
 "{{ setup_extension_name }}" = { order = 10000 }  # This is your application setup Extensions. order = 10000 makes it run last
 
-[dependencies."filter:platform"."windows-x86_64"]
-"omni.kit.window.modifier.titlebar" = {version = "=105.2.16"}  # Use exact version to avoid supported target platform check
-
 [settings.app]
 name = "{{ application_display_name }}"
 fastShutdown = true  # Fast shutdown by default
-useFabricSceneDelegate = true  # Turn on the Fabric scene delegate by default
 
 [settings.app.content]
 emptyStageOnStart = true # This will create a stage during the startup process.
@@ -131,15 +131,8 @@ generateVersionLockExclude = [
 registryEnabled = true
 skipPublishVerification = false
 
-[settings.app.extensions."filter:platform"."linux-x86_64"]
-# Windows only extensions. For all of them set exact=true to not be included into generated version lock.
-# That will break linux otherwise, as version lock is platform agnostic currently.
-excluded = [
-	"omni.kit.window.modifier.titlebar",
-]
-
-[settings.app.exts]
-folders.'++' = [   # Search paths for extensions.
+[settings.app.exts.folders]
+'++' = [   # Search paths for extensions.
 	"${app}/../exts",
 	"${app}/../extscache/"]
 
@@ -270,8 +263,14 @@ width = 1920
 x = -1
 y = -1
 
+[settings.crashreporter]
+compressDumpFiles = true
+
 [settings.crashreporter.data]
 experience = "{{ application_display_name }}"
+
+[settings.exts."omni.activity.ui"]
+auto_save_location = ""
 
 [settings.ext."omni.kit.widget.viewport".sceneView.singleCameraModel]
 enabled = true  # Enable single Viewport camera model (setting w/ typo in current Kit)
@@ -509,9 +508,6 @@ hud.hostMemory.perProcess = true
 [settings.exts."omni.light_rigs"]
 setup_extension_name="{{ setup_extension_name }}"
 
-[settings.exts."omni.services.transport.server.http"]
-port = 8311 # Setting the port for the embedded http server, using custom port for your application make sure not to collide with other apps
-
 [settings.exts."omni.ui".raster]
 default_rasterpolicy_enabled = true # reduce overhead of UI in Layout mode
 
@@ -532,6 +528,7 @@ defaultTemplate = "SunnySky"  # Change default stage template to what we have in
 upAxis = 'Z'
 
 [settings.persistent.app.viewport]
+autoFrame.mode = "first_open"  # Auto frame the first time the viewport is opened
 camMoveVelocity = 1.5
 camVelocityMax = 50
 camVelocityMin = 0.01
@@ -577,9 +574,6 @@ autoLightRig.enabled = true
 
 [settings.persistent.exts."omni.kit.viewport.window"]
 cameraSpeedMessage.showFlyViewLock = true
-
-[settings.privacy]
-externalBuild = true
 
 [settings.renderer]
 active = "rtx"  # RTX As the default renderer always
@@ -631,10 +625,11 @@ useUniformsReindexing = true
 [settings.structuredLog]
 enable = true
 
-[settings.telemetry]
-# Anonymous Kit application usage telemetry
-enableAnonymousData = true
-enableAnonymousAppName = true
+[settings]
+telemetry.disableInternalSessionCheck = true
+telemetry.enableAnonymousAppName = true
+telemetry.enableAnonymousData = true
+privacy.externalBuild = true
 
 
 [[test]]

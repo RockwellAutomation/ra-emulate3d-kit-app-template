@@ -42,8 +42,8 @@ class Emulate3DBoundImplementation : public IRokEmulate3dPythonInterface
 
 private:
     std::shared_ptr<::emulate3d::grpc::Emulate3DGrpcServer> m_server = nullptr;
-    std::shared_ptr<::emulate3d::grpc::Emulate3DGrpcClient> m_client = nullptr;
-    std::unique_ptr<std::future<void>> m_clientFuture;
+    std::unordered_map<std::string, std::shared_ptr<::emulate3d::grpc::Emulate3DGrpcClient>> m_clients;
+    std::unordered_map<std::string, std::unique_ptr<std::future<void>>> m_clientFutures;
 
 public:
     bool start_server(long id) {
@@ -65,7 +65,7 @@ public:
         return true;
     }
 
-    bool connect_client(std::string connectionName, long id, std::string url)
+    bool connect_client(std::string connectionName, long id, std::string url, bool trustSelfSigned)
     {
         ::emulate3d::Logger::SetLevel(::emulate3d::LogLevel::Info);
         PXR_NS::UsdStageRefPtr stage = PXR_NS::UsdUtilsStageCache::Get().Find(PXR_NS::UsdStageCache::Id::FromLongInt(id));
@@ -73,39 +73,44 @@ public:
             ::emulate3d::Logger::Error("Stage not found for id %ld", id);
             return false;
         }
-        m_client = std::make_shared<::emulate3d::grpc::Emulate3DGrpcClient>(connectionName, id, url);
+        auto m_client = std::make_shared<::emulate3d::grpc::Emulate3DGrpcClient>(connectionName, id, url, trustSelfSigned);
         auto connected = m_client->Connect();
         if (!connected) {
             ::emulate3d::Logger::Error("Failed to connect to server at url: %s", url.c_str());
-            m_client.reset();
             return false;
         }
         ::emulate3d::Logger::Info("Connected to server with url: %s", url.c_str());
+        m_clients[url] = m_client;
         // Start listening for frames asynchronously
-        m_clientFuture = std::make_unique<std::future<void>>(std::async(std::launch::async, [this]() {
-            if (m_client) {
-                m_client->ListenForFrames();
-            }
+        m_clientFutures[url] = std::make_unique<std::future<void>>(std::async(std::launch::async, [m_client]() {
+            m_client->ListenForFrames();
         }));
         return true;
     }
 
-    void disconnect_client()
+    void disconnect_client(std::string url)
     {
+        auto m_client = m_clients.at(url);
         if (m_client) {
             m_client->Disconnect();
-            m_client.reset();
+            m_clients.erase(url);
         }
+
+        auto m_clientFuture = m_clientFutures.at(url).get();
         if (m_clientFuture) {
             m_clientFuture->wait();
-            m_clientFuture.reset();
+            m_clientFutures.erase(url);
         }
+        ::emulate3d::Logger::Info("Disconnected from server with url: %s", url.c_str());
     }
 
     bool process_frames() {
-        if (m_client)
+        if (!m_clients.empty())
         {
-            m_client->ProcessFrames();
+            for (const auto& [url, client] : m_clients)
+            {
+                client->ProcessFrames();
+            }
         }
         else if (m_server)
         {

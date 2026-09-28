@@ -1,7 +1,7 @@
 # Emulate3D Kit App Sample
 This repo is an example of how to build a Kit App which communicates with the Emulate3D World Stage server.
 
-It is based on the 107.3 branch in [NVIDIA Kit App Template](https://github.com/NVIDIA-Omniverse/kit-app-template).
+It is based on the 110.1.2 branch in [NVIDIA Kit App Template](https://github.com/NVIDIA-Omniverse/kit-app-template).
 See [Kit-App-Template_README.md](Kit-App-Template_README.md) for the NVIDIA README and [LICENSE](LICENSE) for NVIDIA licensing terms.
 
 This examples contains a pre-made app and extension.
@@ -11,7 +11,7 @@ The extension contains the code to connect to the world stage server, found in [
 - Prerequisites in the NVIDIA [README](Kit-App-Template_README.md)
 - Visual Studio 2022
 - Emulate3D 2026 (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
-- Emulate3D.Usd.Sdk (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
+- Emulate3D.Usd.Sdk 0.0.10 (available via the [PCDC](https://store.sim3d.com/demo3d_2026/product_compatibility_and_download_center))
 
 ## Building and launching
 - Extract Emulate3D.Usd.Sdk to a known location, eg `C:\Emulate3D.Usd.Sdk`

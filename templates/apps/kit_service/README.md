@@ -186,6 +186,8 @@ This will bundle your application into a distributable format, ready for deploym
 
 #### Launching a Package
 
+> :warning: **Deprecated:** `launch --package` is deprecated and will be removed in a future release. To run a packaged application, decompress the archive and launch the extracted application directly. See [Packaging An Application](../../../docs/packaging_app.md) for details.
+
 Applications packaged using the `package` command can be launched using the `launch` command:
 
 **Linux:**
@@ -216,7 +218,7 @@ You will be prompted to select a `.kit` file to serve as the application to laun
 
 For example, if you are containerizing a headless Kit Service, select the `{your-service-name}.kit` file to ensure the correct application configuration is launched within the container.
 
-> **NOTE:** If creating a container for Omniverse Cloud Managed PaaS (OVC), select the `{your-app-name}_ovc.kit` file to ensure the proper settings are used for that platform.
+> **NOTE:** Default Kit Services do not enable UI based interaction.  As such, containerization of these services do not require a streaming Application Layer.  The base application `.kit` file should be used for containerization.
 
 Similar to desktop packaging, the container option allows for specifying a package name using the `--name` flag to name the container image:
 

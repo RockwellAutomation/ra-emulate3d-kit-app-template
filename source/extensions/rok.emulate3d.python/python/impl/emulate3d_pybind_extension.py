@@ -35,25 +35,17 @@ class Emulate3DPybindExtension(omni.ext.IExt):
         settings = carb.settings.get_settings()
         self.url = settings.get("/ext/rok.emulate3d.python/url")
         self.clientName = settings.get("/ext/rok.emulate3d.python/clientName")
+        self.trustSelfSigned = bool(settings.get("/ext/rok.emulate3d.python/trustSelfSigned"))
 
     def on_startup(self, _ext_id):
+        self.update_rtx_settings()
         self.find_create_default_stage()
         print("[rok.emulate3d.python] Plugin started")
         if self.act_as_client:
             # Create and initialize connection UI
             self._connection_ui = ConnectionUI(get_bound_interface(), self.find_create_default_stage)
             if (self.url and self.clientName):
-                self._connection_ui.create_ui(False)
-                print(f"[rok.emulate3d.python] Connecting to gRPC server at {self.url}...")
-                context = omni.usd.get_context()
-                stage_id = context.get_stage_id()
-                print(f"[rok.emulate3d.grpc_server] Connecting to {self.url}...")
-                if get_bound_interface().connect_client(self.clientName, stage_id, self.url):
-                    print(f"[rok.emulate3d.grpc_server] Connected to {self.url} successfully.")
-                else:
-                    print(f"[rok.emulate3d.grpc_server] Failed to connect to {self.url}. Check if the server is running and the URL is correct.")
-            else:
-                self._connection_ui.create_ui(True)
+                self._connection_ui._add_server_connection(self.clientName, self.url, self.trustSelfSigned, True)
 
         else:
             context = omni.usd.get_context()
@@ -61,6 +53,23 @@ class Emulate3DPybindExtension(omni.ext.IExt):
             print("[rok.emulate3d.python] Starting gRPC server...")
             stage_id = context.get_stage_id()
             interface.start_server(stage_id)
+
+    # RTX Real-Time 2.0 is the default render mode only since Kit 108. Users upgrading from our
+    # old Kit 107 app carry over a user.config.json where it's disabled, so the will app
+    # open in RTX - Minimal by default. Rather than make users enable it manually (via Preferences ->
+    # Rendering), we can force it on here at the extensions startup.
+    def update_rtx_settings(self):
+        # Only write a setting when it isn't already correct since setting an rtx related option
+        # displays a 'takes effect next launch' popup, which we'd rather not display every app startup.
+        settings = carb.settings.get_settings()
+        rtx_settings = {
+            "/persistent/rtx/modes/rt2/enabled": True,   # Enable the Real-Time 2.0 mode
+            "/persistent/rtx/modes/pt/enabled": True,    # Enable the Interactive (Path Tracing) mode
+            "/rtx/rendermode": "RaytracedLighting",      # Make Real-Time 2.0 the active mode
+        }
+        for key, value in rtx_settings.items():
+            if settings.get(key) != value:
+                settings.set(key, value)
 
     def on_update(self, p):
         interface = get_bound_interface()
